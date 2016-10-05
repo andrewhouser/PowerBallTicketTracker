@@ -89,10 +89,10 @@ var ViewModel = function () {
 		// Split the input value into individual sets of characters, using any non-numeric
 		// value (A-Z, spaces, etc) as a delimiter. Further filter this array to exclude
 		// any blank values
-		values = val.split(/[^0-9]+/g).filter( function (v) { return v !== '' } );
+		aNumbers = val.split(/[^0-9]+/g).filter( function (v) { return v !== '' } );
 
 		// Walk over each element in the array to validate each number
-		values.forEach( function (v, i, a) {
+		aNumbers.forEach( function (v, i, a) {
 			// Create a Number, ensuring it is no longer than 2 characters (99)
 			var num = parseInt( v.substr(0,2) );
 
