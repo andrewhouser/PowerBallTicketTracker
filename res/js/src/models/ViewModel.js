@@ -464,12 +464,46 @@ var ViewModel = function () {
 	* Determines the monetary award of a provided ticket
 	*
 	* @method ticketAward
-	* @param {Object} oTicket Instance of PowerBallTicket
+	* @param {Number} iMatches Number of matched numbers
+	* @param {Boolean} bPBMatch Whether the powerball matched
+	* @param {Boolean} bPowerPlay Whether the user enabled PowerPlay
+	* @param [Number] iPowerPlay PowerPlay value
 	* @return {Number}
 	*/
-	self.ticketAward = function ( oTicket ) {
-		var iAward = 0;
+	self.ticketAward = function ( iMatches, bPBMatch, bPowerPlay, iPowerPlay ) {
+		var iAward = 0,   // Amount awarded
+		    idx = 0;      // Index within the winnings collection
 
+		// If there were matches or a PowerBall match look
+		// through the results to see if there was any award
+		if ( iMatches > 0 || bPBMatch ) {
+			// Change the award index based on a PowerBall match
+			idx = ( bPBMatch ) ? 1 : 0;
+
+			// Get the award amount from the winnings collection
+			iAward = self.winnings[ iMatches ][ idx ];
+
+			// If there was an award amount, determine if the jackpot was
+			// hit or, if not, if there is a PowerPlay multiplier in effect
+			if ( iAward != 0 ) {
+				// The jackpot was hit
+				if ( iAward == 'JACKPOT' ) {
+					iAward = self.jackpot;
+				}
+				// If the user selected PowerPlay and the payout
+				// is one million, the max payout is doubled with
+				// PowerPlay instead of multiplying by the PowerPlay
+				else if ( iAward == 1000000 && bPowerPlay ) {
+					iAward * 2;
+				}
+				// If the user had PowerPlay on this ticket, multiply
+				// any awarded amount by the PowerPlay multiplier
+				else if ( bPowerPlay ) {
+					iAward *= parseInt( iPowerPlay );
+				}
+			}
+		}
+		// Return the calculated award
 		return iAward;
 	};
 
