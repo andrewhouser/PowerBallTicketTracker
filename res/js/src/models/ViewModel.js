@@ -355,16 +355,31 @@ var ViewModel = function () {
 	* @return none
 	*/
 	self.storeTicket = function () {
+		// Create a new temporary array so we can sort the numbers
+		var aTemp = self.newTicketNumbersArr().slice(0, 5);
+
+		// Perform a numeric sort
+		aTemp.sort( function (a, b) {
+			if (a < b) {
+				return -1;
+			}
+			else if (a > b) {
+				return 1;
+			}
+
+			return 0;
+		});
+
 		// Add the current ticket data to the known stored ticket collection
 		self.storedTickets.push({
 			DrawDate: self.newTicketDate(),
-			PB: self.newTicketNumbersArr[5],
+			PB: self.newTicketNumbersArr()[5],
 			PP: self.newTicketPP(),
-			WB1: self.newTicketNumbersArr[0],
-			WB2: self.newTicketNumbersArr[1],
-			WB3: self.newTicketNumbersArr[2],
-			WB4: self.newTicketNumbersArr[3],
-			WB5: self.newTicketNumbersArr[4]
+			WB1: aTemp[0],
+			WB2: aTemp[1],
+			WB3: aTemp[2],
+			WB4: aTemp[3],
+			WB5: aTemp[4]
 		});
 
 		// Call the Web Store helper to store the array of stored tickets
