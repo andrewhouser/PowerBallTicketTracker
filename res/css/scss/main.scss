@@ -5,7 +5,7 @@ body {
 
 body * {
 	box-sizing: border-box;
-	font-family: 'Helvetica Neue', sans-serif;
+	font-family: "Helvetica Neue", sans-serif;
 }
 
 body > h1,
@@ -24,7 +24,8 @@ body > div {
 	flex-direction: column;
 }
 
-input, select {
+input,
+select {
 	outline: 0;
 }
 
@@ -32,12 +33,15 @@ input, select {
 	width: 8em !important;
 }
 
-@import 'title';
+@import "title";
 
 h4 {
 	border-bottom: 1px solid #222;
+	margin-bottom: .5em;
 	padding-bottom: .2em;
 }
+
+@import "ticketentry";
 
 .ticket-row {
 	position: relative;
@@ -58,15 +62,6 @@ h4 {
 	display: block;
 }
 
-.pb-your-numbers {
-	border: 0;
-	border-bottom: 2px solid #eee;
-	font-size: 2em;
-	padding: .5em .5em 0em;
-	text-align: center;
-	width: 10em;
-}
-
 .ticket-numbers {
 	border-bottom: 2px solid #ccc;
 	display: inline-block;
@@ -77,4 +72,4 @@ h4 {
 	display: inline-block;
 }
 
-@import 'balls';
+@import "balls";

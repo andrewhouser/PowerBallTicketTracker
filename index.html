@@ -15,12 +15,20 @@
 
 
 	<h4>Store a ticket</h4>
-	<div class="pb-input-container">
+	<div class="pb-new-ticket">
 		<select data-bind="options: dates, value: newTicketDate, change: resetInput"></select>
-		<input type="text" class="pb-your-numbers" name="pbYourNumbers" id="pbYourNumbers" value="" data-bind="textInput: newTicketNumbers, event: { keydown: checkNumbers }">
-		<input type="checkbox" name="powerplay" id="powerplay" data-bind="checked: newTicketPP">
-		<input type="button" name="pb-save" id="pbSave" value="Save" data-bind="click: storeTicket">
+
+		<div class="pb-new-ticket-numbers-container">
+			<input type="text" class="pb-new-ticket-numbers" name="yourNumbers" id="yourNumbers" value="" data-bind="textInput: newTicketNumbers, event: { keydown: checkNumbers }, css: { 'pb-new-ticket-numbers-valid': newTicketNumbersArr().length > 0 }">
+			<label for="yourNumbers">Enter ticket numbers</label>
+		</div>
+
+		<input type="checkbox" class="pb-new-ticket-pp" name="powerplay" id="powerplay" data-bind="checked: newTicketPP">
+		<label for="powerplay" title="Add PowerPlay option" class="pb-new-ticket-pp-label">+PP</label>
+
+		<input type="button" class="pb-new-ticket-save" name="pbSave" id="pbSave" value="Add" data-bind="click: storeTicket, css: { 'pb-new-ticket-save-active': canAddTicket}">
 	</div>
+
 
 	<h4>Your tickets</h4>
 	<div data-bind="foreach: storedTickets">

@@ -1,0 +1,73 @@
+.pb-new-ticket-numbers-container {
+	display: inline-block;
+	padding-top: 1em;
+	position: relative;
+
+	label {
+		color: #ccc;
+		font-size: 1.5em;
+		font-weight: 700;
+		left: .7em;
+		position: absolute;
+		top: calc(100% - 1.2em);
+
+		transition: all .5s;
+	}
+}
+
+.pb-new-ticket-numbers {
+	border: 0;
+	border-bottom: 2px solid #eee;
+	color: #444;
+	font-size: 2em;
+	margin: 0 .5em;
+	text-align: center;
+	width: 10em;
+
+	&:focus + label,
+	&-valid + label {
+		font-size: .875em;
+		font-weight: 400;
+		left: 1.2em;
+		top: 0;
+	}
+}
+
+.pb-new-ticket-pp {
+	display: none;
+}
+
+.pb-new-ticket-pp-label {
+	color: #aaa;
+	cursor: pointer;
+	font-weight: 900;
+	margin-right:.5em;
+}
+
+.pb-new-ticket-pp:checked + .pb-new-ticket-pp-label {
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
+	color: #ff1a00;
+}
+
+.pb-new-ticket-save {
+	appearance: none;
+	background: #eee;
+	border: 1px solid #ccc;
+	border-radius: .25em;
+	color: #999;
+	font-family: "Helvetica Neue", sans-serif;
+	font-size: 100%;
+	padding: .3em .75em;
+}
+
+.pb-new-ticket-save-active {
+	background: #ff1a00;
+	background: -moz-linear-gradient(top,  #ff1a00 0%, #ff1a00 100%);
+	background: -webkit-linear-gradient(top,  #ff1a00 0%,#ff1a00 100%);
+	background: linear-gradient(to bottom,  #ff1a00 0%,#ff1a00 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1a00', endColorstr='#ff1a00',GradientType=0 );
+	border-color: #cc1400;
+
+	color: #fff;
+	cursor: pointer;
+}
