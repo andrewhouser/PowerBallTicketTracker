@@ -155,16 +155,21 @@ var ViewModel = function () {
 	self.cleanOldTickets = function () {
 		var aTemp = self.storedTickets(), // Create a working copy
 		    i = aTemp.length-1,           // Standard decrement
-		    idx = -1;                     // DrawingDate index
+		    idx = -1,                     // DrawingDate index
+		    iNumDraws = 4,                // Cut-off
+		    oDraw = null;                 // Instance of a drawing
 
 		// Walk over each stored ticket
 		for ( ; i >= 0; i-- ) {
 			// Get the index of the Drawing Date
 			idx = self.getDrawingIndexByDate( aTemp[ i ].DrawDate );
 
+			// Get a drawing validated against the ticket
+			oDraw = self.validatedTicket( aTemp[i] );
+
 			// If the drawing date is more than 2 weeks and there was
 			// no award on the ticket, remove it from the collection
-			if ( idx > 4 && self.ticketAward( aTemp[i] ) == 0 ) {
+			if ( idx > (iNumDraws - 1) && oDraw.award == 0 ) {
 				aTemp = aTemp.slice(0, i);
 			}
 		}
