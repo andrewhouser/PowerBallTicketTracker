@@ -1,0 +1,80 @@
+html,
+body {
+	background-color: #fff;
+}
+
+body * {
+	box-sizing: border-box;
+	font-family: 'Helvetica Neue', sans-serif;
+}
+
+body > h1,
+body > h4,
+body > div {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 600px;
+}
+
+.flex-container {
+	display: flex;
+}
+
+.flex-columns {
+	flex-direction: column;
+}
+
+input, select {
+	outline: 0;
+}
+
+.select2 {
+	width: 8em !important;
+}
+
+@import 'title';
+
+h4 {
+	border-bottom: 1px solid #222;
+	padding-bottom: .2em;
+}
+
+.ticket-row {
+	position: relative;
+}
+
+.ticket-row-remove {
+	cursor: pointer;
+	display: none;
+	height: 100%;
+	position: absolute;
+	right: 0;
+	text-align: right;
+	top: 0;
+	width: 1em;
+}
+
+.ticket-row:hover .ticket-row-remove {
+	display: block;
+}
+
+.pb-your-numbers {
+	border: 0;
+	border-bottom: 2px solid #eee;
+	font-size: 2em;
+	padding: .5em .5em 0em;
+	text-align: center;
+	width: 10em;
+}
+
+.ticket-numbers {
+	border-bottom: 2px solid #ccc;
+	display: inline-block;
+	padding: .3em 1em;
+}
+
+.pb-draw-results {
+	display: inline-block;
+}
+
+@import 'balls';

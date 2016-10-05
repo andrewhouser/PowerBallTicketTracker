@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>Powerball Checker</title>
+
+	<link rel="stylesheet" href="./res/css/style.css">
+	<script src="./res/js/main.js"></script>
+</head>
+<body>
+	<h1>Powerball
+		<div>
+			<span data-bind="text: jackpot"></span><em>est. jackpot (<em data-bind="text: nextDrawDate"></em>)</em>
+		</div>
+	</h1>
+
+
+	<h4>Store a ticket</h4>
+	<div class="pb-input-container">
+		<select data-bind="options: dates, value: newTicketDate, change: resetInput"></select>
+		<input type="text" class="pb-your-numbers" name="pbYourNumbers" id="pbYourNumbers" value="" data-bind="textInput: newTicketNumbers, event: { keydown: checkNumbers }">
+		<input type="checkbox" name="powerplay" id="powerplay" data-bind="checked: newTicketPP">
+		<input type="button" name="pb-save" id="pbSave" value="Save" data-bind="click: storeTicket">
+	</div>
+
+	<h4>Your tickets</h4>
+	<div data-bind="foreach: storedTickets">
+		<div class="ticket-row">
+			<span data-bind="text: DrawDate"></span>
+
+			<div class="ticket-numbers">
+				<span data-bind="text: WB1"></span>
+				<span data-bind="text: WB2"></span>
+				<span data-bind="text: WB3"></span>
+				<span data-bind="text: WB4"></span>
+				<span data-bind="text: WB5"></span>
+				<span class="powerball" data-bind="text: PB"></span>
+			</div>
+
+			<div class="pb-draw-results" data-bind="with: $root.drawResults($data)">
+				<span class="ball" data-bind="text: WB1, css: { 'match': WB1match }"></span>
+				<span class="ball" data-bind="text: WB2, css: { 'match': WB2match }"></span>
+				<span class="ball" data-bind="text: WB3, css: { 'match': WB3match }"></span>
+				<span class="ball" data-bind="text: WB4, css: { 'match': WB4match }"></span>
+				<span class="ball" data-bind="text: WB5, css: { 'match': WB5match }"></span>
+				<span class="ball powerball" data-bind="text: PB"></span>
+			</div>
+
+			<div data-bind="with: $root.drawResults($data), visible: $data ">
+				You have <span data-bind="text: matches"></span> matches! You have won <span data-bind="text: $root.prizeAwarded( $data, $data.parent )"></span>.
+			</div>
+
+			<div class="ticket-row-remove" data-bind="click: $root.removeTicket">X</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{
+  "name": "powerballchecker",
+  "version": "1.0.0",
+  "description": "A utility site to store your powerball ticket numbers and check them against drawings for your winnings.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "powerball",
+    "knockout",
+    "gulp",
+    "php",
+    "api"
+  ],
+  "author": "Andrew Houser",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^6.5.0",
+    "cssnano": "^3.7.6",
+    "grunt": "^1.0.1",
+    "grunt-cli": "^1.2.0",
+    "grunt-contrib-clean": "^1.0.0",
+    "grunt-contrib-concat": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-sass": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-postcss": "^0.8.0",
+    "load-grunt-configs": "^1.0.0",
+    "load-grunt-tasks": "^3.5.2",
+    "pixrem": "^3.0.2"
+  },
+  "repository": {}
+}
