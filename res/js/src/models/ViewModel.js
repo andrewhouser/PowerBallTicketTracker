@@ -157,7 +157,7 @@ var ViewModel = function () {
 		// Numbers collection
 		if ( oDraw ) {
 
-			// Set the ball match boolean for each bal drawn
+			// Set the ball match boolean for each ball drawn
 			for ( ; i < oDraw.Numbers.length; i++ ) {
 				if ( oTicket.Numbers.indexOf( oDraw.Numbers[i] ) > -1 ) {
 					oDraw['WB' + ( i + 1 ) + 'match'] = true;
@@ -349,38 +349,52 @@ var ViewModel = function () {
 
 
 	/**
+	* Sorts all stored tickets based on their drawing date, in
+	* descending order.
+	*
+	* @method sortTickets
+	* @return none
+	*/
+	self.sortTickets = function () {
+		var aTemp = self.storedTickets();
+
+		aTemp.sort( function (a, b) {
+			var dta = new Date(a.DrawDate),
+			    dtb = new Date(b.DrawDate);
+
+			console.log( dta, dtb );
+
+			return dtb >= dta;
+		});
+
+		self.storedTickets( aTemp );
+	};
+
+
+	/**
 	* Push the entered ticket data to the Web Storage
 	*
 	* @method storeTicket
 	* @return none
 	*/
 	self.storeTicket = function () {
-		// Create a new temporary array so we can sort the numbers
-		var aTemp = self.newTicketNumbersArr().slice(0, 5);
-
-		// Perform a numeric sort
-		aTemp.sort( function (a, b) {
-			if (a < b) {
-				return -1;
-			}
-			else if (a > b) {
-				return 1;
-			}
-
-			return 0;
-		});
-
-		// Add the current ticket data to the known stored ticket collection
-		self.storedTickets.push({
+		// Create a new PowerBallTicket. This does two beneficial
+		// and necessary things - it sorts the ball numbers numerically
+		// and provides a Numbers member which is required for
+		// drawing matches.
+		var oTicket = new PowerBallTicket({
 			DrawDate: self.newTicketDate(),
 			PB: self.newTicketNumbersArr()[5],
 			PP: self.newTicketPP(),
-			WB1: aTemp[0],
-			WB2: aTemp[1],
-			WB3: aTemp[2],
-			WB4: aTemp[3],
-			WB5: aTemp[4]
+			WB1: self.newTicketNumbersArr()[0],
+			WB2: self.newTicketNumbersArr()[1],
+			WB3: self.newTicketNumbersArr()[2],
+			WB4: self.newTicketNumbersArr()[3],
+			WB5: self.newTicketNumbersArr()[4]
 		});
+
+		// Add the current ticket data to the known stored ticket collection
+		self.storedTickets.push( oTicket );
 
 		// Call the Web Store helper to store the array of stored tickets
 		self.saveStoredTickets();
