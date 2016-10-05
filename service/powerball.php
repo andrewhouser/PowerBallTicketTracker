@@ -197,8 +197,12 @@ function nextDrawDate () {
 	// Set the next drawing date to next Wednesday by default
 	$nextDrawDate = date("m/d/Y", strtotime("next Wednesday"));
 
+	// If today IS Wednesday or Saturday, then the drawing date is today
+	if ( $dayOfWeek == 3 || $dayOfWeek == 6 ) {
+		$nextDrawDate = date("m/d/Y");
+	}
 	// If today is > Wednesday, set the last drawing date to next Saturday
-	if ( $dayOfWeek > 3 ) {
+	else if ( $dayOfWeek > 3 ) {
 		$nextDrawDate = date("m/d/Y", strtotime("next Saturday"));
 	}
 
