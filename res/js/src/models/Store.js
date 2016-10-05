@@ -90,6 +90,7 @@ var Store = function () {
 		}
 
 		if ( typeof(Storage) !== undefined ) {
+			self.deleteItem( sKey );
 			sReturn = localStorage.setItem( sKey, val );
 		}
 		else {
