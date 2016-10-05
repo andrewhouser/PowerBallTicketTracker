@@ -38,11 +38,11 @@ var PowerBallTicket = function ( oData ) {
 			self.PB = parseInt( self.PB );
 		}
 
-		// The PowerPlay value can be a number (in the instance where
-		// this ticket represents drawing data) or a boolean (in the
+		// The PowerPlay value can be a number/string (in the instance where
+		// this ticket represents drawing data) or a Boolean (in the
 		// instance of user ticket data).
-		// If it is a number, convert it explicitly
-		if ( typeof self.PP === 'number' ) {
+		// If it is not a Boolean, convert it explicitly to a Number
+		if ( typeof self.PP !== 'boolean' ) {
 			self.PP = parseInt( self.PP );
 		}
 
