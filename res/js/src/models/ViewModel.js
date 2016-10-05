@@ -325,6 +325,18 @@ var ViewModel = function () {
 
 
 	/**
+	* Returns the ticket input to it's default ready state
+	*
+	* @method resetTicketInput
+	* @return none
+	*/
+	self.resetTicketInput = function () {
+		self.newTicketNumbers('');
+		self.newTicketDate( self.dates()[0]);
+	};
+
+
+	/**
 	* Web Storage transaction
 	*
 	* @method saveStoredTickets
@@ -357,6 +369,9 @@ var ViewModel = function () {
 
 		// Call the Web Store helper to store the array of stored tickets
 		self.saveStoredTickets();
+
+		// Reset the user interface
+		self.resetTicketInput();
 	};
 
 
