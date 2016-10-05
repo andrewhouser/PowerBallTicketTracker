@@ -112,6 +112,39 @@ var ViewModel = function () {
 
 
 	/**
+	* Removes old tickets (older than last four drawings) which do not have an
+	* award amount
+	*
+	* @method cleanOldTickets
+	* @return none
+	*/
+	self.cleanOldTickets = function () {
+		var aTemp = self.storedTickets(), // Create a working copy
+		    i = aTemp.length-1,           // Standard decrement
+		    idx = -1;                     // DrawingDate index
+
+		// Walk over each stored ticket
+		for ( ; i >= 0; i-- ) {
+			// Get the index of the Drawing Date
+			idx = self.getDrawingIndexByDate( aTemp[ i ].DrawDate );
+
+			// If the drawing date is more than 2 weeks and there was
+			// no award on the ticket, remove it from the collection
+			if ( idx > 4 && self.ticketAward( aTemp[i] ) == 0 ) {
+				aTemp = aTemp.slice(0, i);
+			}
+		}
+
+		// Set the stored tickets observed collection to the new
+		// trimmed down collection of tickets
+		self.storedTickets( aTemp );
+
+		// Update the Web Storage with the newly trimmed collection
+		self.saveStoredTickets();
+	};
+
+
+	/**
 	* Computed observable that returns a list of Drawing Dates from the
 	* data returned by the PowerBall data plus the date of the next
 	* drawing
@@ -191,6 +224,8 @@ var ViewModel = function () {
 	* @return {Object|Null}
 	*/
 	self.getDrawingByDate = function ( sDate ) {
+		var ticket = null;
+
 		for ( ticket in self.drawings() ) {
 			if ( self.drawings()[ticket].DrawDate == sDate ) {
 				return self.drawings()[ticket];
@@ -198,6 +233,28 @@ var ViewModel = function () {
 		}
 
 		return null;
+	};
+
+
+	/**
+	* Locates a PowerBall Drawing index matching the provided date
+	*
+	* @method getDrawingIndexByDate
+	* @param {String} sDate
+	* @return {Number}
+	*/
+	self.getDrawingIndexByDate = function ( sDate ) {
+		var i = 0,
+		    idx = -1;
+
+		for ( ; i < self.drawings().length; i++ ) {
+			if ( self.drawings()[ i ].DrawDate == sDate ) {
+				idx = i;
+				break;
+			}
+		}
+
+		return idx;
 	};
 
 
@@ -222,6 +279,8 @@ var ViewModel = function () {
 
 		// Store the temporary collection as the storedTickets observable.
 		self.storedTickets( aTemp );
+
+		self.sortTickets();
 	};
 
 
@@ -305,6 +364,10 @@ var ViewModel = function () {
 
 		// Store the temporary collection as the drawings observable.
 		self.drawings( aTemp );
+
+		// Clean up any old tickets now that the last ticket drawing
+		// dates are known
+		self.cleanOldTickets();
 	};
 
 
@@ -362,8 +425,6 @@ var ViewModel = function () {
 			var dta = new Date(a.DrawDate),
 			    dtb = new Date(b.DrawDate);
 
-			console.log( dta, dtb );
-
 			return dtb >= dta;
 		});
 
@@ -401,6 +462,20 @@ var ViewModel = function () {
 
 		// Reset the user interface
 		self.resetTicketInput();
+	};
+
+
+	/**
+	* Determines the monetary award of a provided ticket
+	*
+	* @method ticketAward
+	* @param {Object} oTicket Instance of PowerBallTicket
+	* @return {Number}
+	*/
+	self.ticketAward = function ( oTicket ) {
+		var iAward = 0;
+
+		return iAward;
 	};
 
 
