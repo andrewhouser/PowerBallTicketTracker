@@ -28,6 +28,10 @@ var ViewModel = function () {
 	self.winnings[5]			= [1000000, 'JACKPOT'];
 
 
+	self.canAddTicket = ko.computed( function () {
+		return ( self.newTicketNumbersArr().length == 6 );
+	});
+
 	/**
 	* Validates the user entry when entering ticket drawing numbers
 	* Tries to make it easier for user entry my auto formatting numbers
@@ -416,11 +420,18 @@ var ViewModel = function () {
 	* @return none
 	*/
 	self.storeTicket = function () {
+		var oTicket; // Instance of a PowerBallTicket
+
+		// Validate that this operation is permitted
+		if ( !self.canAddTicket() ) {
+			return;
+		}
+
 		// Create a new PowerBallTicket. This does two beneficial
 		// and necessary things - it sorts the ball numbers numerically
 		// and provides a Numbers member which is required for
 		// drawing matches.
-		var oTicket = new PowerBallTicket({
+		oTicket = new PowerBallTicket({
 			DrawDate: self.newTicketDate(),
 			PB: self.newTicketNumbersArr()[5],
 			PP: self.newTicketPP(),
