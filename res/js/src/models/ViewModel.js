@@ -203,11 +203,20 @@ var ViewModel = function () {
 
 
 	/**
+	* Returns the prize awarded based on the numbers matched
 	*
+	* @method formatPrizeAwarded
+	* @param {Number} iAmount
+	* @return {String|Null}
 	*/
+	self.formatPrizeAwarded = function ( iAmount ) {
+		var sAward = null;
 
+		if ( iAmount > 0 ) {
+			sAward = '$'+ iAmount.toLocaleString('en-US');
 		}
 
+		return sAward;
 	};
 
 
@@ -299,40 +308,6 @@ var ViewModel = function () {
 
 		// Retrieve any stored tickets from the Web Storage
 		self.getStoredTickets();
-	};
-
-
-	/**
-	* Returns the prize awarded based on the numbers matched
-	*
-	* @method prizeAwarded
-	* @param {Object} oData
-	* @return {String|Null}
-	*/
-	self.prizeAwarded = function ( oData ) {
-		var amt = 0,
-		    idx = 0,
-		    sAward = null;
-
-		if ( oData.matches > 0 || oData.PBmatch ) {
-			idx = ( oData.PBmatch ) ? 1 : 0;
-			amt = self.winnings[ oData.matches ][ idx ];
-
-			if ( amt != 0 ) {
-				if ( amt == 'Grand Prize' ) {
-					sAward = amt;
-				}
-				else {
-					if ( oData.isPowerPlay ) {
-						amt *= parseInt( oData.PP );
-					}
-
-					sAward = '$'+ amt.toLocaleString('en-US');
-				}
-			}
-		}
-
-		return sAward;
 	};
 
 
