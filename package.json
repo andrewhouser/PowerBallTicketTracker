@@ -31,5 +31,8 @@
     "load-grunt-tasks": "^3.5.2",
     "pixrem": "^3.0.2"
   },
-  "repository": {}
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/andrewhouser/PowerBallTicketTracker"
+  }
 }
