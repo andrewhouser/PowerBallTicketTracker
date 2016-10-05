@@ -284,6 +284,8 @@ var ViewModel = function () {
 		// Store the temporary collection as the storedTickets observable.
 		self.storedTickets( aTemp );
 
+		// After the tickets have been assigned to the stored tickets member,
+		// call the function to sort them
 		self.sortTickets();
 	};
 
@@ -426,6 +428,9 @@ var ViewModel = function () {
 
 		// Add the current ticket data to the known stored ticket collection
 		self.storedTickets.push( oTicket );
+
+		// Sort the stored tickets by date
+		self.sortTickets();
 
 		// Call the Web Store helper to store the array of stored tickets
 		self.saveStoredTickets();
