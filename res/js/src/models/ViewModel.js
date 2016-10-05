@@ -203,50 +203,11 @@ var ViewModel = function () {
 
 
 	/**
-	* Returns a drawing that corresponds to the provided ticket's
-	* DrawDate member. If a drawing was found, it will be compared
-	* against the provided ticket and any matches will be flagged.
-	* Additionally, other metadata about the ticket will be stored
-	* as members of the drawing as they impact the drawing results
-	* in other methods.
 	*
-	* @method drawResults
-	* @param {Object} oTicket Instance of a PowerBallTicket
-	* @return {Object|Null}
 	*/
-	self.drawResults = function ( oTicket ) {
-		var i = 0,
-		    iMatches = 0,
-		    oDraw = self.getDrawingByDate( oTicket.DrawDate );
 
-		// If a drawing was returned, look at it's Numbers property
-		// and determine if any of them match the provided ticket's
-		// Numbers collection
-		if ( oDraw ) {
-
-			// Set the ball match boolean for each ball drawn
-			for ( ; i < oDraw.Numbers.length; i++ ) {
-				if ( oTicket.Numbers.indexOf( oDraw.Numbers[i] ) > -1 ) {
-					oDraw['WB' + ( i + 1 ) + 'match'] = true;
-					++iMatches;
-				}
-				else {
-					oDraw['WB' + ( i + 1 ) + 'match'] = false;
-				}
-			}
-
-			// Set whether the PowerBall matched or not
-			oDraw['PBmatch'] = ( oDraw.PB == oTicket.PB );
-
-			// Set now many balls matched the provided ticket
-			oDraw['matches'] = iMatches;
-
-			// Store the PowerPlay option from the ticket for winning
-			// calculations later
-			oDraw['isPowerPlay'] = oTicket.PP;
 		}
 
-		return oDraw;
 	};
 
 
@@ -513,14 +474,55 @@ var ViewModel = function () {
 	};
 
 
-	/*
-	* Creates a subscription to the observable newTicketDate. Whenever this
-	* value changes, the ticket number input should be cleared.
+	/**
+	* Returns a drawing object with metadata about matched numbers,
+	* payout amounts, etc
+	*
+	* @method validatedTicket
+	* @param {Object} oTicket PowerBallTicket instance
+	* @return {Object}
 	*/
-	self.newTicketDate.subscribe( function ( newVal ) {
-		self.newTicketNumbers( null );
-		self.newTicketNumbersArr.removeAll();
-	});
+	self.validatedTicket = function ( oTicket ) {
+		var i = 0,
+		    iMatches = 0,
+		    oDraw = self.getDrawingByDate( oTicket.DrawDate );
+
+		// If a drawing was returned, look at it's Numbers property
+		// and determine if any of them match the provided ticket's
+		// Numbers collection
+		if ( oDraw ) {
+
+			// Set the ball match boolean for each ball drawn
+			for ( ; i < oDraw.Numbers.length; i++ ) {
+				if ( oTicket.Numbers.indexOf( oDraw.Numbers[i] ) > -1 ) {
+					oDraw['WB' + ( i + 1 ) + 'match'] = true;
+					++iMatches;
+				}
+				else {
+					oDraw['WB' + ( i + 1 ) + 'match'] = false;
+				}
+			}
+
+			// Set whether the PowerBall matched or not
+			oDraw['PBmatch'] = ( oDraw.PB == oTicket.PB );
+
+			// Set now many balls matched the provided ticket
+			oDraw['matches'] = iMatches;
+
+			// Store the PowerPlay option from the ticket for winning
+			// calculations later
+			oDraw['isPowerPlay'] = oTicket.PP;
+
+			// Determine how much this drawing against this ticket yields
+			oDraw['award'] = self.ticketAward( iMatches, oDraw['PBmatch'], oTicket.PP, oDraw.PP );
+
+			// Set a flag to indicate whether this drawing against this
+			// ticket yielded a winning ticket
+			oDraw['isWinner'] = ( oDraw['award'] > 0 );
+		}
+
+		return oDraw;
+	}
 
 	// Return the ViewModel
 	return self;
