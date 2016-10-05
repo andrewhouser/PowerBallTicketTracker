@@ -19,13 +19,13 @@ var ViewModel = function () {
 	self.newTicketNumbersArr	= ko.observableArray([]);
 
 	// Collection of dollar amount payouts awarded by PowerBall lottery
-	self.winnings			= [];
-	self.winnings[0] 		= [0, 4];
-	self.winnings[1] 		= [0, 4];
-	self.winnings[2] 		= [0, 7];
-	self.winnings[3] 		= [7, 100];
-	self.winnings[4] 		= [100, 50000];
-	self.winnings[5] 		= [1000000, 'Grand Prize'];
+	self.winnings				= [];
+	self.winnings[0]			= [0, 4];
+	self.winnings[1]			= [0, 4];
+	self.winnings[2]			= [0, 7];
+	self.winnings[3]			= [7, 100];
+	self.winnings[4]			= [100, 50000];
+	self.winnings[5]			= [1000000, 'JACKPOT'];
 
 
 	/**
@@ -41,13 +41,37 @@ var ViewModel = function () {
 	* @return {Boolean} false
 	*/
 	self.checkNumbers = function ( obj, e ) {
-		var charsToDel = 1,                  // When the delete key is pressed, how many
+		var aNumbers = [],                     // Holds numbers after splitting
+		    charsToDel = 1,                  // When the delete key is pressed, how many
 		                                     // characters to remove
 		    key = e.keyCode || e.charCode,   // Which key was pressed
 		    del = ( key == 8 || key ==46 ),  // Determine the delete/backspace keys by number
 		    val = '',                        // Raw input
-		    values = [],                     // Holds numbers after splitting
 		    newVal = '';                     // output to element
+
+		/**
+		* INNER FUNCTION
+		* This function benefits from closure and checks the input to determine
+		* if a space should be added to the end of the input line to facilitate
+		* a better user experience when entering numbers
+		*
+		* @method padInput
+		* @return {String}
+		*/
+		function padInput () {
+			// Format the output by joining the collection of numbers, separated
+			// by a space.
+			var str = aNumbers.join(' ')
+
+			// If the output does not end in a space and the last number already has
+			// 2 digits and the Numbers collection has less than 6 items, add a space
+			// to the end of the input to ready the input for the next set of numbers.
+			if (str && ( val.substr( val.length - 1 ) == ' ' ||  aNumbers[aNumbers.length-1].toString().length == 2 ) && aNumbers.length < 6 ) {
+				str += ' ';
+			}
+
+			return str;
+		};
 
 		// If the delete/backspace key was pressed, determine how many characters to remove.
 		if ( del ) {
@@ -85,23 +109,33 @@ var ViewModel = function () {
 
 		// Once all the numbers have been validated, if there are more than
 		// 6 numbers (5 numbers plus 1 PowerBall), remove any numbers beyond 6.
-		if ( values.length > 6 ) {
-			values = values.splice(0, 6);
+		if ( aNumbers.length > 6 ) {
+			aNumbers = aNumbers.splice(0, 6);
+		}
+
+
+		// Run a first pass on creating an output string
+		newVal = padInput()
+
+		// Now that the output string has been generated, it can be evaluated.
+		// If the last character is a space, then a distinct number has been
+		// entered. This allows for unique numbers to be checked and for false
+		// positives - like 4 matching against the first character in 43 - from
+		// impeding user entry.
+		if ( newVal.lastIndexOf(' ') == newVal.length - 1 ) {
+			// Filter out all numbers so that they appear only
+			// once in the input
+			aNumbers = aNumbers.filter( function( v, i, a ) {
+				return a.indexOf( v ) === i;
+			});
+
+			// Re-run the output constructor now that the collection of values
+			// is unique
+			newVal = padInput();
 		}
 
 		// Set the local observable to the collection of numbers
-		self.newTicketNumbersArr( values );
-
-		// Format the output by joining the collection of numbers, separated
-		// by a space.
-		newVal = values.join(' ');
-
-		// If the output does not end in a space and the last number already has
-		// 2 digits and the Numbers collection has less than 6 items, add a space
-		// to the end of the input to ready the input for the next set of numbers.
-		if (newVal && ( val.substr( val.length - 1 ) == ' ' ||  values[values.length-1].toString().length == 2 ) && values.length < 6 ) {
-			newVal += ' ';
-		}
+		self.newTicketNumbersArr( aNumbers );
 
 		// Set the observable to this new output value
 		self.newTicketNumbers( newVal );
