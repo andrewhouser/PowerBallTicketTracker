@@ -46,7 +46,7 @@
 
 .pb-new-ticket-pp:checked + .pb-new-ticket-pp-label {
 	text-shadow: 1px 1px 0 rgba(0, 0, 0, .2);
-	color: #ff1a00;
+	color: lighten($powerballred, 15%);
 }
 
 .pb-new-ticket-save {
@@ -61,12 +61,12 @@
 }
 
 .pb-new-ticket-save-active {
-	background: #ff1a00;
-	background: -moz-linear-gradient(top,  #ff1a00 0%, #ff1a00 100%);
-	background: -webkit-linear-gradient(top,  #ff1a00 0%,#ff1a00 100%);
-	background: linear-gradient(to bottom,  #ff1a00 0%,#ff1a00 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ff1a00', endColorstr='#ff1a00',GradientType=0 );
-	border-color: #cc1400;
+	background: $powerballred;
+	background: -moz-linear-gradient(top,  $powerballred 0%, $powerballred 100%);
+	background: -webkit-linear-gradient(top,  $powerballred 0%,$powerballred 100%);
+	background: linear-gradient(to bottom,  $powerballred 0%,$powerballred 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='$powerballred', endColorstr='$powerballred',GradientType=0 );
+	border-color: darken( $powerballred, 20% );
 
 	color: #fff;
 	cursor: pointer;

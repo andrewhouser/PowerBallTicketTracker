@@ -30,18 +30,18 @@
 	</div>
 
 
-	<h4>Your tickets</h4>
+	<h4 data-bind="visible: storedTickets().length > 0">Your tickets</h4>
 	<div data-bind="foreach: storedTickets">
 		<div class="ticket-row">
-			<span data-bind="text: DrawDate"></span>
+			<span class="ticket-drawdate" data-bind="text: DrawDate"></span>
 
 			<div class="ticket-numbers">
-				<span data-bind="text: WB1"></span>
-				<span data-bind="text: WB2"></span>
-				<span data-bind="text: WB3"></span>
-				<span data-bind="text: WB4"></span>
-				<span data-bind="text: WB5"></span>
-				<span class="powerball" data-bind="text: PB"></span>
+				<span class="ticket-num" data-bind="text: WB1"></span>
+				<span class="ticket-num" data-bind="text: WB2"></span>
+				<span class="ticket-num" data-bind="text: WB3"></span>
+				<span class="ticket-num" data-bind="text: WB4"></span>
+				<span class="ticket-num" data-bind="text: WB5"></span>
+				<span class="ticket-num ticket-num-powerball" data-bind="text: PB"></span>
 			</div>
 
 			<!-- ko with: $root.validatedTicket( $data ) -->
@@ -54,12 +54,21 @@
 				<span class="ball powerball" data-bind="text: PB, css: { 'match': PBmatch }"></span>
 			</div>
 
-			<div data-bind="visible: isWinner">
+			<!-- ko if: ( $data.award > 0 ) -->
+			<div class="ticket-winnings ticket-winnings-awarded">
 				You have won <span data-bind="text: $root.formatPrizeAwarded( $data.award )"></span>.
 			</div>
 			<!-- /ko -->
 
-			<div class="ticket-row-remove" data-bind="click: $root.removeTicket">X</div>
+			<!-- ko if: ( $data.award == 0 ) -->
+			<div class="ticket-winnings">
+				This ticket has no award.
+			</div>
+			<!-- /ko -->
+
+			<!-- /ko -->
+
+			<div class="ticket-row-remove" data-bind="click: $root.removeTicket" title="remove ticket">X</div>
 		</div>
 	</div>
 </body>
