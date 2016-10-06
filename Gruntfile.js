@@ -16,8 +16,10 @@ module.exports = function ( grunt ) {
 
 	grunt.registerTask( 'js', ['concat:library', 'concat:js', 'uglify:js', 'concat:main', 'clean:js'] );
 
+	grunt.registerTask( 'build', ['css', 'js']);
+
 
 	// Default task(s).
-	grunt.registerTask('default', ['css', 'js', 'watch']);
+	grunt.registerTask('default', ['build', 'watch']);
 
 };
