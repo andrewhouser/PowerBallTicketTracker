@@ -376,6 +376,7 @@ var ViewModel = function () {
 	*/
 	self.resetTicketInput = function () {
 		self.newTicketNumbers('');
+		self.newTicketNumbersArr([]);
 		self.newTicketDate( self.dates()[0]);
 	};
 
