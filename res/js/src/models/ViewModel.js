@@ -385,6 +385,8 @@ var ViewModel = function () {
 
 	/**
 	* Returns the ticket input to it's default ready state
+	* The Ticket Date and PowerPlay options are not reset so that
+	* multiple numbers on the same ticket can be entered rapidly.
 	*
 	* @method resetTicketInput
 	* @return none
@@ -392,7 +394,6 @@ var ViewModel = function () {
 	self.resetTicketInput = function () {
 		self.newTicketNumbers('');
 		self.newTicketNumbersArr([]);
-		self.newTicketDate( self.dates()[0]);
 	};
 
 
