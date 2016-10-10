@@ -304,6 +304,35 @@ var ViewModel = function () {
 
 
 	/**
+	* Looks through the document URL for parameters on the query line
+	*
+	* @method getUrlParameterByName
+	* @param {String} sName Key of the param to find
+	* @param [String] sUrl Document URL to search
+	* @return {String}
+	*/
+	self.getUrlParameterByName = function ( sName, sUrl) {
+		var regex = null,
+		    results = null;
+
+		sUrl	= sUrl || window.location.href;
+		sName	= sName.replace( /[\[\]]/g, '\\$&' );
+		regex	= new RegExp('[?&]' + sName + '(=([^&#]*)|&|#|$)' );
+		results	= regex.exec( sUrl );
+
+		if ( !results ) {
+			return null;
+		}
+
+		if ( !results[2] ) {
+			return '';
+		}
+
+		return decodeURIComponent( results[2].replace(/\+/g, ' ') );
+	};
+
+
+	/**
 	* Initialize the ViewModel
 	*
 	* @method init
@@ -312,7 +341,7 @@ var ViewModel = function () {
 	self.init = function () {
 		// Get the latest (or stored) PowerBall data from the API service
 		$.ajax({
-			url: 'service/powerball.php',
+			url: 'service/powerball.php?force=' + self.getUrlParameterByName('force'),
 			method: 'GET',
 			dataType: 'json',
 			success: self.processPowerBallData

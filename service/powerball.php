@@ -9,6 +9,9 @@ date_default_timezone_set ( "America/New_York" );
 // get live data from the PowerBall site when needed.
 $PBD = new PowerBallData();
 
+// Allow a parameter on the URL to force the data to be queried from
+// the PowerBall web site
+$forceRefresh = ( isset($_GET['force']) && ( $_GET['force'] == 1 || $_GET["force"] == "true" ) );
 
 /**
 * Retrieves a list of the drawings data
@@ -62,7 +65,7 @@ function getDraws () {
 	}
 
 	// If the data found was not fresh, get new data
-	if ( $getFreshData ) {
+	if ( $getFreshData || $forceRefresh ) {
 		// Reset the collection
 		$draws = Array();
 
@@ -145,7 +148,7 @@ function getJackpot () {
 	}
 
 	// If the data found was not fresh, get new data
-	if ( $getFreshData == true ) {
+	if ( $getFreshData || $forceRefresh ) {
 		// Ask the PowerBallData instance for new jackpot data
 		$jackpot = $PBD->readJackpot();
 
