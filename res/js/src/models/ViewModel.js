@@ -199,13 +199,17 @@ var ViewModel = function () {
 		var i = 0,
 		    aTemp = [];
 
-		// Loop over each drawing and extract the DrawDate member
-		for ( ; i < self.drawings().length; i++ ) {
-			aTemp.push( self.drawings()[i].DrawDate );
-		}
+		// Only return an array of dates if the data from the PowerBall
+		// website has been received.
+		if ( self.drawings().length > 0 ) {
+			// Loop over each drawing and extract the DrawDate member
+			for ( ; i < self.drawings().length; i++ ) {
+				aTemp.push( self.drawings()[i].DrawDate );
+			}
 
-		// Add the next Drawing Date to the front of the collection
-		aTemp.unshift( self.nextDrawDate() );
+			// Add the next Drawing Date to the front of the collection
+			aTemp.unshift( self.nextDrawDate() );
+		}
 
 		return aTemp;
 	});
@@ -320,6 +324,17 @@ var ViewModel = function () {
 		// Retrieve any stored tickets from the Web Storage
 		self.getStoredTickets();
 	};
+
+
+	/**
+	* Returns true if the jackpot and drawing dates have not yet loaded
+	*
+	* @method isLoading
+	* @return {Boolean}
+	*/
+	self.isLoading = ko.computed( function () {
+		return ( self.jackpot() == null && self.dates().length == 0 );
+	});
 
 
 	/**
