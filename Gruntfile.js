@@ -1,6 +1,6 @@
 module.exports = function ( grunt ) {
 	// Load all the required grunt task plugins
-	var options = { config: { src: "grunt/*.js" } };
+	var options = { config: { src: "res/grunt/*.js" } };
 	var configs = require('load-grunt-configs')(grunt, options);
 
 	require('load-grunt-tasks')(grunt);

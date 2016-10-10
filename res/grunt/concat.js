@@ -6,7 +6,7 @@ module.exports = {
 		options: {
 			separator: '',
 		},
-		src: ['res/css/main.post.css', 'res/css/lib/select2.min.css'],
+		src: ['res/css/lib/select2.min.css', 'res/css/main.post.css'],
 		dest: 'res/css/style.css'
 	},
 	js: {
