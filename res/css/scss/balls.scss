@@ -26,21 +26,21 @@
 }
 
 .powerball {
-	background-color: $powerballred !important;
+	background-color: $powerballred;
 }
 
 
 .powerball,
-.ball.match {
+.ball .match {
 	color: #fff;
 	text-shadow: -1px -1px rgba(0,0,0,.1)
 }
 
-.ball.match {
+.ball .match {
 	background-color: blue;
 }
 
-.ball.powerball.match {
+.ball .powerball .match {
 	border-color: #f99;
 	box-shadow: 0 0 10px 5px rgba(0,0,255,.2);
 }
