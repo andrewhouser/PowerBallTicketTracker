@@ -14,7 +14,7 @@ module.exports = function ( grunt ) {
 
 	grunt.registerTask( 'css', ['sass', 'postcss', 'concat:css', 'clean:css'] );
 
-	grunt.registerTask( 'js', ['concat:library', 'concat:js', 'uglify:js', 'concat:main', 'clean:js'] );
+	grunt.registerTask( 'js', ['concat:library', 'concat:js', 'uglify:js', 'concat:main', 'clean:js', 'mochaTest'] );
 
 	grunt.registerTask( 'build', ['css', 'js']);
 
