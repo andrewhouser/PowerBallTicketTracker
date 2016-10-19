@@ -4,3 +4,4 @@
 /res/js/main.*
 /res/css/style.css
 dbconn.config.php
+/results.txt
